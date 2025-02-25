@@ -13,9 +13,9 @@ With the leftmost pointer as the indication, the pointer does not move, instead,
 - Semi-transparent background picture effect
 
 ## Preview
-![running picture tryment-clock](https://github.com/tokisaki-galaxy/tryment-clock/blob/master/readme/result.png)
+![running picture tryment-clock](https://github.com/tokisaki-galaxy/tryment-clock/blob/master/README/result.png)
 
-![in-game pictures](https://github.com/tokisaki-galaxy/tryment-clock/blob/master/readme/ins.jpg)
+![in-game pictures](https://github.com/tokisaki-galaxy/tryment-clock/blob/master/README/ins.jpg)
 
 
 ## Usage
