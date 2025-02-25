@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrymenT ClocK</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="clock-container">
+        <div class="clock">
+            <div class="indicator"></div>
+            <!-- Markers will be added by JavaScript -->
+        </div>
+        <div class="date-display">
+            <div class="date-label">What's ThE DatE</div>
+            <div class="date-value" id="current-date"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create clock markers
+        const clock = document.querySelector('.clock');
+        const symbols = ['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
+        const specialSymbols = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω']
+
+        // 添加外圈刻度线
+        for (let i = 0; i < 60; i++) {
+            const angle = (i * 6) * (Math.PI / 180);
+            const length = i % 5 === 0 ? 15 : 8; // Longer marks for hours
+
+            const x = 190 * Math.sin(angle) + 200;
+            const y = -190 * Math.cos(angle) + 200;
+
+            const tick = document.createElement('div');
+            tick.className = 'tick-mark';
+            tick.style.height = `${length}px`;
+            tick.style.left = `${x}px`;
+            tick.style.top = `${y}px`;
+            tick.style.transform = `translate(-50%, -100%) rotate(${i * 6}deg)`;
+            clock.appendChild(tick);
+        }
+
+        // 添加中间刻度线
+        // 垂直于中心刻度线 (内圈，介于罗马数字和希腊字母之间)
+        for (let i = 0; i < 60; i++) {
+            const angle = (i * 6) * (Math.PI / 180);
+            const x = 150 * Math.sin(angle) + 200;
+            const y = -150 * Math.cos(angle) + 200;
+        
+            if (i % 5 === 0) {
+                // 对于每5分钟的刻度，使用绿色棱形
+                const diamond = document.createElement('div');
+                diamond.style.position = 'absolute';
+                diamond.style.width = '8px';
+                diamond.style.height = '16px';
+                diamond.style.backgroundColor = '#c1ff00'; // 与indicator相同的绿色
+                diamond.style.left = `${x}px`;
+                diamond.style.top = `${y}px`;
+                diamond.style.transform = `translate(-50%, -50%) rotate(${i * 6 + 180}deg)`; // 旋转180度
+                diamond.style.transformOrigin = '50% 50%';
+                diamond.style.clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'; // 棱形形状
+                clock.appendChild(diamond);
+            } else {
+                // 对于其他刻度，保持原有的线条样式
+                const tick = document.createElement('div');
+                tick.className = 'tick-mark';
+                tick.style.height = '10px'; // 所有非5分钟刻度统一使用小刻度
+                tick.style.left = `${x}px`;
+                tick.style.top = `${y}px`;
+                tick.style.transform = `translate(-50%, -100%) rotate(${i * 6}deg)`;
+                clock.appendChild(tick);
+            }
+        }
+
+        // 在刻度线代码后，希腊字母代码前添加这段代码
+
+        // 添加两个实线圆圈（夹住中间刻度线）
+        // 圆圈1 - 位于罗马数字和内圈刻度线之间
+        const innerCircle = document.createElement('div');
+        innerCircle.style.position = 'absolute';
+        innerCircle.style.left = '50%';
+        innerCircle.style.top = '50%';
+        innerCircle.style.width = '300px';
+        innerCircle.style.height = '300px';
+        innerCircle.style.transform = 'translate(-50%, -50%)';
+        innerCircle.style.borderRadius = '50%';
+        innerCircle.style.border = '1px solid #333';
+        innerCircle.style.boxSizing = 'border-box';
+        clock.appendChild(innerCircle);
+
+        // 圆圈2 - 位于希腊字母和内圈刻度线之间
+        const outerCircle = document.createElement('div');
+        outerCircle.style.position = 'absolute';
+        outerCircle.style.left = '50%';
+        outerCircle.style.top = '50%';
+        outerCircle.style.width = '320px';
+        outerCircle.style.height = '320px';
+        outerCircle.style.transform = 'translate(-50%, -50%)';
+        outerCircle.style.borderRadius = '50%';
+        outerCircle.style.border = '1px solid #333';
+        outerCircle.style.boxSizing = 'border-box';
+        clock.appendChild(outerCircle);
+
+        // 创建小时标记（罗马数字，现在更靠近中心）
+        for (let i = 0; i < symbols.length; i++) {
+            const angle = (i * 30) * (Math.PI / 180);
+            const x = 120 * Math.sin(angle) + 200; // 更靠近中心
+            const y = -120 * Math.cos(angle) + 200; // 更靠近中心
+
+            const marker = document.createElement('div');
+            marker.className = 'marker';
+            marker.textContent = symbols[i];
+            marker.style.fontSize = '30px'; // 缩小字体
+            marker.style.left = `${x - 20}px`;
+            marker.style.top = `${y - 12}px`;
+            // 添加旋转，使文字从中心向外辐射
+            marker.style.transform = `rotate(${i * 30}deg)`;
+            marker.style.transformOrigin = '20px 12px';
+            clock.appendChild(marker);
+        }
+
+        // 创建分钟/特殊符号标记 (希腊字母保持不变)
+        for (let i = 0; i < specialSymbols.length; i++) {
+            const angle = (i * 15) * (Math.PI / 180);
+            const x = 180 * Math.sin(angle) + 200;
+            const y = -180 * Math.cos(angle) + 200;
+
+            const marker = document.createElement('div');
+            marker.className = 'marker';
+            marker.textContent = specialSymbols[i];
+            marker.style.left = `${x - 20}px`;
+            marker.style.top = `${y - 12}px`;
+            // 添加旋转，使文字从中心向外辐射
+            marker.style.transform = `rotate(${i * 15}deg)`;
+            marker.style.transformOrigin = '20px 12px';
+            clock.appendChild(marker);
+        }
+
+        // 更新时间
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+
+            // Position the indicator
+            const hourAngle = ((hours * 30) + (minutes * 0.5)) * (Math.PI / 180);
+            const indicatorX = 150 * Math.sin(hourAngle) + 200;
+            const indicatorY = -150 * Math.cos(hourAngle) + 200;
+
+            const indicator = document.querySelector('.indicator');
+            indicator.style.left = `${indicatorX}px`;
+            indicator.style.top = `${indicatorY}px`;
+
+            // Update the date
+            const dateElement = document.getElementById('current-date');
+            const monthNames = ["JanuarY", "FebruarY", "MarcH", "ApriL", "MaY", "JunE", "JulY", "AugusT", "SeptEmber", "OctobeR", "NovembeR", "DecembeR"];
+            const month = monthNames[now.getMonth()];
+            const day = now.getDate();
+            const year = now.getFullYear().toString().substring(2);
+            dateElement.textContent = `${month} ${day}, 20${year}`;
+        }
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial update
+    </script>
+</body>
+
+</html>
