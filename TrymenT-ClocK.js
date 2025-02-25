@@ -1,6 +1,6 @@
 const clock = document.querySelector('.clock');
 const symbols = ['Ⅻ', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ', 'Ⅺ'];
-const specialSymbols = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω', 'OVERLAY_CHAR'];
+const specialSymbols = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω', 'OVERLAY_CHAR'].reverse();
 
 // 创建时钟元素的函数
 function createClockElements() {
@@ -198,10 +198,10 @@ function updateClock() {
     // 最左边是指示器，所以加270。旋转方向需要是顺时针的，所以加负号
     // 外圈分钟，内圈小时
     const romanAngle = 270 - (hours * 30);
-    const greekAngle = 270 - (minutes * 6 + seconds * 0.1);
+    const greekAngle = 270 + (minutes * 6 + seconds * 0.1);
     // 外圈秒钟，内圈分钟
     //const romanAngle = 270 - (minutes * 30);
-    //const greekAngle = 270 - (seconds * 6);
+    //const greekAngle = 270 + (seconds * 6);
 
     // 旋转数字容器
     romanContainer.style.transform = `translate(-50%, -50%) rotate(${romanAngle}deg)`;
