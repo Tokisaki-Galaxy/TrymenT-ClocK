@@ -1,4 +1,3 @@
-// Create clock markers
 const clock = document.querySelector('.clock');
 const symbols = ['Ⅻ', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ', 'Ⅺ'];
 const specialSymbols = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω', 'OVERLAY_CHAR']
@@ -161,6 +160,20 @@ for (let i = 0; i < specialSymbols.length; i++) {
     greekContainer.appendChild(marker);
 }
 
+// 创建并注入背景图片元素
+function injectBackgroundImage() {
+    const clockContainer = document.querySelector('.clock-container');
+    const dateDisplay = document.querySelector('.date-display');
+    
+    // 创建图片元素
+    const backgroundImage = document.createElement('img');
+    backgroundImage.src = 'img.png';
+    backgroundImage.className = 'background-image';
+    
+    // 将图片插入到时钟容器中，放在日期显示之前（确保图层顺序）
+    clockContainer.insertBefore(backgroundImage, dateDisplay);
+}
+
 // 更新时间函数
 function updateClock() {
     const now = new Date();
@@ -187,66 +200,73 @@ function updateClock() {
     const month = monthNames[now.getMonth()];
     const day = now.getDate();
     //const year = now.getFullYear().toString().substring(2);
-    const year = (now.getFullYear()+10).toString().substring(2);
+    const year = (now.getFullYear() + 10).toString().substring(2);
     dateElement.textContent = `${month} ${day}, 20${year}`;
 }
 
-// 获取时钟容器
-const clockContainer = document.querySelector('.clock-container');
-
 // 获取当前屏幕尺寸
 function adjustClockSize() {
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
 
-// 根据窗口大小计算缩放比例
-const scale = Math.min(windowWidth / 300, windowHeight / 200);
+    // 根据窗口大小计算缩放比例
+    const scale = Math.min(windowWidth / 300, windowHeight / 200);
 
-// 应用样式
-clockContainer.style.transform = `scale(${scale})`;
-clockContainer.style.position = 'fixed';
-clockContainer.style.right = '-10%';
-clockContainer.style.top = '50%';
-clockContainer.style.transformOrigin = 'center center';
-clockContainer.style.marginTop = '-200px'; // 假设时钟高度约为400px，使垂直居中
+    // 获取时钟容器
+    const clockContainer = document.querySelector('.clock-container');
 
-// 确保时钟容器有明确的尺寸
-clockContainer.style.width = '400px';
-clockContainer.style.height = '400px';
+    // 应用样式
+    clockContainer.style.transform = `scale(${scale})`;
+    clockContainer.style.position = 'fixed';
+    clockContainer.style.right = '-10%';
+    clockContainer.style.top = '50%';
+    clockContainer.style.transformOrigin = 'center center';
+    clockContainer.style.marginTop = '-200px'; // 假设时钟高度约为400px，使垂直居中
 
-// 设置子元素的宽高
-const clock = document.createElement('div');
-clock.id = 'clock';
-clock.style.width = '100%';
-clock.style.height = '100%';
-clock.style.position = 'relative';
+    // 确保时钟容器有明确的尺寸
+    clockContainer.style.width = '400px';
+    clockContainer.style.height = '400px';
 
-// 获取日期显示元素
-const dateDisplay = document.querySelector('.date-display');
+    // 设置子元素的宽高
+    const clock = document.createElement('div');
+    clock.id = 'clock';
+    clock.style.width = '100%';
+    clock.style.height = '100%';
+    clock.style.position = 'relative';
 
-// 将日期显示左移
-dateDisplay.style.position = 'absolute';
-dateDisplay.style.right = '45%'; // 可以调整此值来控制左移程度
-dateDisplay.style.top = '48%'; // 可以调整此值来控制宽度
-dateDisplay.style.transform = 'scale(0.5)'; // 添加50%的缩放
-dateDisplay.style.transformOrigin = 'top'; // 从右侧进行缩放，以保持位置
+    // 获取日期显示元素
+    const dateDisplay = document.querySelector('.date-display');
 
-// 如果时钟容器内已有clock元素则不添加
-if (!document.getElementById('clock')) {
-    clockContainer.appendChild(clock);
+    // 将日期显示左移
+    dateDisplay.style.position = 'absolute';
+    dateDisplay.style.right = '45%';
+    dateDisplay.style.top = '48%';
+    dateDisplay.style.transform = 'scale(0.5)';
+    dateDisplay.style.transformOrigin = 'top';
 
-    // 移动所有时钟元素到新的clock元素中
-    const elements = document.querySelectorAll('.clock-container > div:not(#clock)');
-    elements.forEach(el => {
-        clock.appendChild(el);
-    });
+    // 如果时钟容器内已有clock元素则不添加
+    if (!document.getElementById('clock')) {
+        clockContainer.appendChild(clock);
+
+        // 移动所有时钟元素到新的clock元素中
+        const elements = document.querySelectorAll('.clock-container > div:not(#clock)');
+        elements.forEach(el => {
+            clock.appendChild(el);
+        });
+    }
 }
-}
 
-// 初始调整尺寸
-adjustClockSize();
+// 在页面加载完成后
+document.addEventListener('DOMContentLoaded', function() {
+    injectBackgroundImage();
+    
+    // 初始调整尺寸
+    adjustClockSize();
+    
+    // 更新时钟初始化
+    updateClock(); // Initial update
+    setInterval(updateClock, 500);
+});
+
 // 窗口大小改变时重新调整
 window.addEventListener('resize', adjustClockSize);
-
-setInterval(updateClock, 500);
-updateClock(); // Initial update
