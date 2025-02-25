@@ -21,6 +21,8 @@
 
 ## 使用方法
 只需要引入三个文件即可使用该时钟：
+
+### 自动加载模式
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -29,11 +31,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
     <link rel="stylesheet" href="TrymenT-ClocK.css">
+    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+</head>
+</html>
+```
+
+### 手动指定加载模式
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrymenT ClocK</title>
+    <!-- 还有这个css -->
+    <link rel="stylesheet" href="TrymenT-ClocK.css">
 </head>
 <body>
+    <!-- 从此开始 -->
     <div class="clock-container">
         <div class="clock">
-            <!-- 标记将由JavaScript自动添加 -->
         </div>
         <div class="date-display">
             <div class="date-label">What'S ThE DatE</div>
@@ -41,6 +58,7 @@
         </div>
     </div>
     <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+    <!-- 到这结束 -->
 </body>
 </html>
 ```

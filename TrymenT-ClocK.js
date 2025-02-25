@@ -1,4 +1,3 @@
-const clock = document.querySelector('.clock');
 const symbols = ['Ⅻ', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ', 'Ⅺ'];
 const specialSymbols = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω', 'OVERLAY_CHAR'].reverse();
 
@@ -94,7 +93,7 @@ function createRotatingContainers() {
 
     // 创建罗马数字标记
     createSymbolMarkers(romanContainer, symbols, 130, 30);
-    
+
     // 创建希腊字母标记
     createSpecialSymbolMarkers(greekContainer, specialSymbols, 180, 14.4);
 
@@ -173,12 +172,12 @@ function createSpecialSymbolMarkers(container, symbols, radius, angleStep) {
 function injectBackgroundImage() {
     const clockContainer = document.querySelector('.clock-container');
     const dateDisplay = document.querySelector('.date-display');
-    
+
     // 创建图片元素
     const backgroundImage = document.createElement('img');
     backgroundImage.src = 'img.png';
     backgroundImage.className = 'background-image';
-    
+
     // 将图片插入到时钟容器中，放在日期显示之前（确保图层顺序）
     clockContainer.insertBefore(backgroundImage, dateDisplay);
 }
@@ -253,7 +252,7 @@ function setupClockContainer(clockContainer) {
         clock.style.width = '100%';
         clock.style.height = '100%';
         clock.style.position = 'relative';
-        
+
         clockContainer.appendChild(clock);
 
         // 移动所有时钟元素到新的clock元素中
@@ -276,11 +275,46 @@ function setupClockContainer(clockContainer) {
 
 // 初始化函数
 function initialize() {
+    // 创建或获取时钟容器
+    let clockContainer = document.querySelector('.clock-container');
+    if (!clockContainer) {
+        clockContainer = document.createElement('div');
+        clockContainer.className = 'clock-container';
+        document.body.appendChild(clockContainer);
+
+        // 创建时钟元素
+        const clockElement = document.createElement('div');
+        clockElement.className = 'clock';
+        clockContainer.appendChild(clockElement);
+
+        // 创建日期显示元素
+        const dateDisplay = document.createElement('div');
+        dateDisplay.className = 'date-display';
+
+        const dateLabel = document.createElement('div');
+        dateLabel.className = 'date-label';
+        dateLabel.textContent = "What'S ThE DatE";
+
+        const dateValue = document.createElement('div');
+        dateValue.className = 'date-value';
+        dateValue.id = 'current-date';
+
+        dateDisplay.appendChild(dateLabel);
+        dateDisplay.appendChild(dateValue);
+        clockContainer.appendChild(dateDisplay);
+    }
+
+    // 强制重新获取clock元素
+    window.clock = document.querySelector('.clock');
+
     createClockElements();
     injectBackgroundImage();
     adjustClockSize();
     updateClock(); // 初始更新
     setInterval(updateClock, 500); // 每500毫秒更新一次
+
+    // 确保时钟容器在背景层
+    clockContainer.style.zIndex = '-2';
 }
 
 // 在页面加载完成后

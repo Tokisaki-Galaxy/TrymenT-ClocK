@@ -21,26 +21,46 @@ With the leftmost pointer as the indication, the pointer does not move, instead,
 
 ## Usage
 Only three files need to be imported to use the clock:
+
+
+### Auto-load mode
 ```html
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrymenT ClocK</title>
-<link rel="stylesheet" href="TrymenT-ClocK.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrymenT ClocK</title>
+    <!-- Here -->
+    <link rel="stylesheet" href="TrymenT-ClocK.css">
+    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+</head>
+</html>
+```
+
+### Manual loading mode
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrymenT ClocK</title>
+    <!-- this css -->
+    <link rel="stylesheet" href="TrymenT-ClocK.css">
 </head>
 <body>
-<div class="clock-container">
-<div class="clock">
-<! -tags will be automatically added by JavaScript->
-</div>
-<div class="date-display">
-<div class="date-label">What'S ThE DatE</div>
-<div class="date-value" id="current-date"></div>
-</div>
-</div>
-<script type="text/javascript" src="TrymenT-ClocK.js"></script>
+    <!-- start -->
+    <div class="clock-container">
+        <div class="clock">
+        </div>
+        <div class="date-display">
+            <div class="date-label">What'S ThE DatE</div>
+            <div class="date-value" id="current-date"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+    <!-- end -->
 </body>
 </html>
 ```
