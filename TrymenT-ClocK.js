@@ -1,6 +1,52 @@
 const symbols = ['Ⅻ', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ', 'Ⅺ'];
 const specialSymbols = ['Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν', 'Ξ', 'Ο', 'Π', 'Ρ', 'Σ', 'Τ', 'Υ', 'Φ', 'Χ', 'Ψ', 'Ω', 'OVERLAY_CHAR'].reverse();
 
+// 初始化函数
+function initialize() {
+    // 创建黑色背景层
+    createBackgroundLayer();
+    // 创建或获取时钟容器
+    let clockContainer = document.querySelector('.clock-container');
+    if (!clockContainer) {
+        clockContainer = document.createElement('div');
+        clockContainer.className = 'clock-container';
+        document.body.appendChild(clockContainer);
+
+        // 创建时钟元素
+        const clockElement = document.createElement('div');
+        clockElement.className = 'clock';
+        clockContainer.appendChild(clockElement);
+
+        // 创建日期显示元素
+        const dateDisplay = document.createElement('div');
+        dateDisplay.className = 'date-display';
+
+        const dateLabel = document.createElement('div');
+        dateLabel.className = 'date-label';
+        dateLabel.textContent = "What'S ThE DatE";
+
+        const dateValue = document.createElement('div');
+        dateValue.className = 'date-value';
+        dateValue.id = 'current-date';
+
+        dateDisplay.appendChild(dateLabel);
+        dateDisplay.appendChild(dateValue);
+        clockContainer.appendChild(dateDisplay);
+    }
+
+    // 强制重新获取clock元素
+    window.clock = document.querySelector('.clock');
+
+    createClockElements();
+    injectBackgroundImage();
+    adjustClockSize();
+    updateClock(); // 初始更新
+    setInterval(updateClock, 500); // 每500毫秒更新一次
+
+    // 确保时钟容器在背景层
+    clockContainer.style.zIndex = '-2';
+}
+
 // 创建时钟元素的函数
 function createClockElements() {
     // 添加外圈刻度线
@@ -273,48 +319,42 @@ function setupClockContainer(clockContainer) {
     dateDisplay.style.transformOrigin = 'top';
 }
 
-// 初始化函数
-function initialize() {
-    // 创建或获取时钟容器
-    let clockContainer = document.querySelector('.clock-container');
-    if (!clockContainer) {
-        clockContainer = document.createElement('div');
-        clockContainer.className = 'clock-container';
-        document.body.appendChild(clockContainer);
-
-        // 创建时钟元素
-        const clockElement = document.createElement('div');
-        clockElement.className = 'clock';
-        clockContainer.appendChild(clockElement);
-
-        // 创建日期显示元素
-        const dateDisplay = document.createElement('div');
-        dateDisplay.className = 'date-display';
-
-        const dateLabel = document.createElement('div');
-        dateLabel.className = 'date-label';
-        dateLabel.textContent = "What'S ThE DatE";
-
-        const dateValue = document.createElement('div');
-        dateValue.className = 'date-value';
-        dateValue.id = 'current-date';
-
-        dateDisplay.appendChild(dateLabel);
-        dateDisplay.appendChild(dateValue);
-        clockContainer.appendChild(dateDisplay);
-    }
-
-    // 强制重新获取clock元素
-    window.clock = document.querySelector('.clock');
-
-    createClockElements();
-    injectBackgroundImage();
-    adjustClockSize();
-    updateClock(); // 初始更新
-    setInterval(updateClock, 500); // 每500毫秒更新一次
-
-    // 确保时钟容器在背景层
-    clockContainer.style.zIndex = '-2';
+// 创建最底层黑色背景
+function createBackgroundLayer() {
+    // 获取窗口分辨率
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    
+    // 创建SVG元素
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    
+    // 设置SVG属性
+    svg.setAttribute("width", windowWidth);
+    svg.setAttribute("height", windowHeight);
+    svg.setAttribute("id", "background-layer");
+    
+    // 设置SVG样式
+    svg.style.position = "fixed";
+    svg.style.top = "0";
+    svg.style.left = "0";
+    svg.style.zIndex = "-999"; // 确保在最底层
+    svg.style.backgroundColor = "#000000";
+    
+    // 创建一个黑色矩形填充整个SVG
+    const rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("width", "100%");
+    rect.setAttribute("height", "100%");
+    rect.setAttribute("fill", "#000000");
+    
+    // 将矩形添加到SVG
+    svg.appendChild(rect);
+    
+    // 将SVG添加到文档中
+    document.body.insertBefore(svg, document.body.firstChild);
+    
+    // 返回SVG元素，以便后续可能的操作
+    return svg;
 }
 
 // 在页面加载完成后
