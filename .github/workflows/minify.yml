@@ -3,7 +3,7 @@ name: Minify Files
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
