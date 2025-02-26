@@ -1,0 +1,41 @@
+name: Minify Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install terser clean-css-cli
+
+    - name: Minify JavaScript
+      run: |
+        npx terser TrymenT-ClocK.js -o TrymenT-ClocK.min.js
+        echo '/*此为minjs，原脚本github:https://github.com/Tokisaki-Galaxy/TrymenT-ClocK*/' | cat - TrymenT-ClocK.min.js > temp && mv temp TrymenT-ClocK.min.js
+
+    - name: Minify CSS
+      run: npx cleancss -o TrymenT-ClocK.min.css TrymenT-ClocK.css
+
+    - name: Commit and push minified files
+      if: success()
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add TrymenT-ClocK.min.js TrymenT-ClocK.min.css
+        git commit --amend --no-edit
+        git push --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
