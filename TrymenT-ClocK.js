@@ -53,31 +53,37 @@ function initialize() {
 
 // 设置外部容器的透明度
 function setupExternalContainer() {
-    // 检查是否是Fluid主题
     const boardElement = document.getElementById('board');
-    function isFluidTheme(element) {
-        if (element.tagName === 'SPAN' && element.textContent.trim() === 'Fluid') {
+
+    // 主题判断
+    function isTheme(element, themeName) {
+        if (element.tagName === 'SPAN' && element.textContent.trim() === themeName) {
             return true;
         }
         for (let child of element.children) {
-            if (isFluidTheme(child)) {
+            if (isTheme(child, themeName)) {
                 return true;
             }
         }
         return false;
     }
-    if (boardElement && isFluidTheme(document.querySelector('footer'))) {
-        // 添加90%透明度
-        boardElement.style.opacity = '0.9';
-    } else {
-        // 可能需要延迟查找
-        setTimeout(() => {
-            const delayedBoardElement = document.getElementById('board');
-            if (delayedBoardElement) {
-                delayedBoardElement.style.opacity = '0.9';
-            }
-        }, 3000); // 等待后再次尝试
+
+    // 处理不同主题的透明度设置
+    function handleThemeOpacity(themeName, opacity) {
+        if (boardElement && isTheme(document.querySelector('footer'), themeName)) {
+            boardElement.style.opacity = opacity;
+        } else {
+            setTimeout(() => {
+                const delayedBoardElement = document.getElementById('board');
+                if (delayedBoardElement) {
+                    delayedBoardElement.style.opacity = opacity;
+                }
+            }, 3000); // 等待后再次尝试
+        }
     }
+
+    // 不同主题设置不同透明度
+    handleThemeOpacity('Fluid', '0.9');
 }
 
 // 创建时钟元素的函数
