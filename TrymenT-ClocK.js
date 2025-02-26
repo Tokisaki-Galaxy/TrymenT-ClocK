@@ -45,6 +45,39 @@ function initialize() {
 
     // 确保时钟容器在背景层
     clockContainer.style.zIndex = '-2';
+    createOverlayLayer();
+    // 设置外部项目的容器透明度
+    setupExternalContainer();
+    console.log('Welcome to Tryment Clock');
+}
+
+// 设置外部容器的透明度
+function setupExternalContainer() {
+    // 检查是否是Fluid主题
+    const boardElement = document.getElementById('board');
+    function isFluidTheme(element) {
+        if (element.tagName === 'SPAN' && element.textContent.trim() === 'Fluid') {
+            return true;
+        }
+        for (let child of element.children) {
+            if (isFluidTheme(child)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    if (boardElement && isFluidTheme(document.querySelector('footer'))) {
+        // 添加90%透明度
+        boardElement.style.opacity = '0.9';
+    } else {
+        // 可能需要延迟查找
+        setTimeout(() => {
+            const delayedBoardElement = document.getElementById('board');
+            if (delayedBoardElement) {
+                delayedBoardElement.style.opacity = '0.9';
+            }
+        }, 3000); // 等待后再次尝试
+    }
 }
 
 // 创建时钟元素的函数
@@ -221,8 +254,13 @@ function injectBackgroundImage() {
 
     // 创建图片元素
     const backgroundImage = document.createElement('img');
-    backgroundImage.src = 'img.png';
     backgroundImage.className = 'background-image';
+    backgroundImage.src = 'img.png';
+
+    // 如果加载失败，则使用备用URL
+    backgroundImage.onerror = function () {
+        backgroundImage.src = 'https://img.picui.cn/free/2025/02/26/67bec9b40a4f6.png';
+    };
 
     // 将图片插入到时钟容器中，放在日期显示之前（确保图层顺序）
     clockContainer.insertBefore(backgroundImage, dateDisplay);
@@ -324,35 +362,74 @@ function createBackgroundLayer() {
     // 获取窗口分辨率
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    
+
     // 创建SVG元素
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
-    
+
     // 设置SVG属性
     svg.setAttribute("width", windowWidth);
     svg.setAttribute("height", windowHeight);
     svg.setAttribute("id", "background-layer");
-    
+
     // 设置SVG样式
     svg.style.position = "fixed";
     svg.style.top = "0";
     svg.style.left = "0";
     svg.style.zIndex = "-999"; // 确保在最底层
     svg.style.backgroundColor = "#000000";
-    
+
     // 创建一个黑色矩形填充整个SVG
     const rect = document.createElementNS(svgNS, "rect");
     rect.setAttribute("width", "100%");
     rect.setAttribute("height", "100%");
     rect.setAttribute("fill", "#000000");
-    
+
     // 将矩形添加到SVG
     svg.appendChild(rect);
-    
+
     // 将SVG添加到文档中
     document.body.insertBefore(svg, document.body.firstChild);
-    
+
+    // 返回SVG元素，以便后续可能的操作
+    return svg;
+}
+
+// 创建顶层半透明覆盖层
+function createOverlayLayer() {
+    // 获取窗口分辨率
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // 创建SVG元素
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+
+    // 设置SVG属性
+    svg.setAttribute("width", windowWidth);
+    svg.setAttribute("height", windowHeight);
+    svg.setAttribute("id", "overlay-layer");
+
+    // 设置SVG样式
+    svg.style.position = "fixed";
+    svg.style.top = "0";
+    svg.style.left = "0";
+    svg.style.zIndex = "-1";
+    svg.style.pointerEvents = "none"; // 允许点击穿透
+
+    // 创建一个半透明矩形填充整个SVG
+    const rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("width", "100%");
+    rect.setAttribute("height", "100%");
+    rect.setAttribute("fill", "#fff");
+    rect.setAttribute("opacity", "0.4"); // 不透明度
+
+    // 将矩形添加到SVG
+    svg.appendChild(rect);
+
+    // 将SVG添加到文档中
+    document.body.appendChild(svg);
+
     // 返回SVG元素，以便后续可能的操作
     return svg;
 }
