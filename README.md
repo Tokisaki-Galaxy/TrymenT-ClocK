@@ -31,9 +31,9 @@ Only three files need to be imported to use the clock:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
-    <!-- Here -->
-    <link rel="stylesheet" href="TrymenT-ClocK.css">
-    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+    <!-- the loading code is here. min.css/js and css/js have the same content, which is automatically updated -->
+    <link rel="stylesheet" href="TrymenT-ClocK.min.css">
+    <script type="text/javascript" src="TrymenT-ClocK.min.js"></script>
 </head>
 </html>
 ```
@@ -46,21 +46,19 @@ Only three files need to be imported to use the clock:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
-    <!-- this css -->
     <link rel="stylesheet" href="TrymenT-ClocK.css">
+    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
 </head>
 <body>
-    <!-- start -->
+    <!-- Here -->
     <div class="clock-container">
         <div class="clock">
         </div>
-        <div class="date-display">
-            <div class="date-label">What'S ThE DatE</div>
-            <div class="date-value" id="current-date"></div>
+        <div class="clock-date-display">
+            <div class="clock-date-label">What'S ThE DatE</div>
+            <div class="clock-date-value" id="current-date"></div>
         </div>
     </div>
-    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
-    <!-- end -->
 </body>
 </html>
 ```

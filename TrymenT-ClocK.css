@@ -13,7 +13,7 @@
     background-color: #000;
 }
 
-.marker {
+.clock-marker {
     position: absolute;
     font-size: 24px;
     color: #88a4c3;
@@ -22,18 +22,7 @@
     text-align: center;
 }
 
-.indicator {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 10px;
-    height: 10px;
-    background-color: #c1ff00;
-    transform: translate(-50%, -50%);
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
-
-.date-display {
+.clock-date-display {
     position: absolute;
     right: 100px;
     top: 50%;
@@ -41,19 +30,19 @@
     text-align: right;
 }
 
-.date-label {
+.clock-date-label {
     color: #fff;
     font-size: 14px;
     margin-bottom: 5px;
     letter-spacing: 2.5px;
 }
 
-.date-value {
+.clock-date-value {
     color: #c1ff00;
     font-size: 18px;
 }
 
-.tick-mark {
+.clock-tick-mark {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -63,7 +52,7 @@
     transform-origin: bottom center;
 }
 
-.circle-dial {
+.clock-circle-dial {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -75,7 +64,7 @@
     box-sizing: border-box;
 }
 
-.background-image {
+.clock-background-image {
     position: absolute;
     right: 35%;
     top: 70%;

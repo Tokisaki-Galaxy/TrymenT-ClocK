@@ -19,14 +19,14 @@ function initialize() {
 
         // 创建日期显示元素
         const dateDisplay = document.createElement('div');
-        dateDisplay.className = 'date-display';
+        dateDisplay.className = 'clock-date-display';
 
         const dateLabel = document.createElement('div');
-        dateLabel.className = 'date-label';
+        dateLabel.className = 'clock-date-label';
         dateLabel.textContent = "What'S ThE DatE";
 
         const dateValue = document.createElement('div');
-        dateValue.className = 'date-value';
+        dateValue.className = 'clock-date-value';
         dateValue.id = 'current-date';
 
         dateDisplay.appendChild(dateLabel);
@@ -95,7 +95,7 @@ function createClockElements() {
         const y = -194 * Math.cos(angle) + 200;
 
         const tick = document.createElement('div');
-        tick.className = 'tick-mark';
+        tick.className = 'clock-tick-mark';
         tick.style.height = '6px';
         tick.style.left = `${x}px`;
         tick.style.top = `${y}px`;
@@ -106,14 +106,14 @@ function createClockElements() {
     // 添加两个实线圆圈（夹住中间刻度线）
     // 圆圈1 - 位于罗马数字和内圈刻度线之间
     const innerCircle = document.createElement('div');
-    innerCircle.className = 'circle-dial';
+    innerCircle.className = 'clock-circle-dial';
     innerCircle.style.width = '301px';
     innerCircle.style.height = '301px';
     clock.appendChild(innerCircle);
 
     // 圆圈2 - 位于希腊字母和内圈刻度线之间
     const outerCircle = document.createElement('div');
-    outerCircle.className = 'circle-dial';
+    outerCircle.className = 'clock-circle-dial';
     outerCircle.style.width = '321px';
     outerCircle.style.height = '321px';
     clock.appendChild(outerCircle);
@@ -141,7 +141,7 @@ function createClockElements() {
         } else {
             // 对于其他刻度，保持原有的线条样式
             const tick = document.createElement('div');
-            tick.className = 'tick-mark';
+            tick.className = 'clock-tick-mark';
             tick.style.height = '9.5px'; // 所有非5分钟刻度统一使用小刻度
             tick.style.left = `${x}px`;
             tick.style.top = `${y}px`;
@@ -193,7 +193,7 @@ function createSymbolMarkers(container, symbols, radius, angleStep) {
         const y = -radius * Math.cos(angle) + radius;
 
         const marker = document.createElement('div');
-        marker.className = 'marker';
+        marker.className = 'clock-marker';
         marker.textContent = symbol;
         marker.style.fontSize = '30px';
         marker.style.position = 'absolute';
@@ -213,7 +213,7 @@ function createSpecialSymbolMarkers(container, symbols, radius, angleStep) {
         const y = -radius * Math.cos(angle) + radius;
 
         const marker = document.createElement('div');
-        marker.className = 'marker';
+        marker.className = 'clock-marker';
         marker.style.position = 'absolute';
         marker.style.left = `${x - 20}px`;
         marker.style.top = `${y - 12}px`;
@@ -256,11 +256,11 @@ function createSpecialSymbolMarkers(container, symbols, radius, angleStep) {
 // 创建并注入背景图片元素
 function injectBackgroundImage() {
     const clockContainer = document.querySelector('.clock-container');
-    const dateDisplay = document.querySelector('.date-display');
+    const dateDisplay = document.querySelector('.clock-date-display');
 
     // 创建图片元素
     const backgroundImage = document.createElement('img');
-    backgroundImage.className = 'background-image';
+    backgroundImage.className = 'clock-background-image';
     backgroundImage.src = 'img.png';
 
     // 如果加载失败，则使用备用URL
@@ -353,7 +353,7 @@ function setupClockContainer(clockContainer) {
     }
 
     // 获取日期显示元素
-    const dateDisplay = document.querySelector('.date-display');
+    const dateDisplay = document.querySelector('.clock-date-display');
 
     // 将日期显示左移
     dateDisplay.style.position = 'absolute';
@@ -382,6 +382,8 @@ function createBackgroundLayer() {
     svg.style.position = "fixed";
     svg.style.top = "0";
     svg.style.left = "0";
+    svg.style.width = "100%";
+    svg.style.height = "100%";
     svg.style.zIndex = "-999"; // 确保在最底层
     svg.style.backgroundColor = "#000000";
 
@@ -420,6 +422,8 @@ function createOverlayLayer() {
     svg.style.position = "fixed";
     svg.style.top = "0";
     svg.style.left = "0";
+    svg.style.width = "100%";
+    svg.style.height = "100%";
     svg.style.zIndex = "-1";
     svg.style.pointerEvents = "none"; // 允许点击穿透
 
