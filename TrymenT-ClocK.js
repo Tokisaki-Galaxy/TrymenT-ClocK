@@ -261,7 +261,7 @@ function injectBackgroundImage() {
     // 创建图片元素
     const backgroundImage = document.createElement('img');
     backgroundImage.className = 'clock-background-image';
-    backgroundImage.src = 'img.png';
+    backgroundImage.src = 'https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/img.png';
 
     // 如果加载失败，则使用备用URL
     backgroundImage.onerror = function () {

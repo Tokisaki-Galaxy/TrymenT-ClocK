@@ -32,8 +32,8 @@ Only three files need to be imported to use the clock:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
     <!-- the loading code is here. min.css/js and css/js have the same content, which is automatically updated -->
-    <link rel="stylesheet" href="TrymenT-ClocK.min.css">
-    <script type="text/javascript" src="TrymenT-ClocK.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script>
 </head>
 </html>
 ```
@@ -46,8 +46,8 @@ Only three files need to be imported to use the clock:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
-    <link rel="stylesheet" href="TrymenT-ClocK.css">
-    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script>
 </head>
 <body>
     <!-- Here -->

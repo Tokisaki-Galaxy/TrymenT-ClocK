@@ -31,8 +31,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
     <!-- 加载代码在这，min.css/js和css/js内容一致，有自动更新 -->
-    <link rel="stylesheet" href="TrymenT-ClocK.min.css">
-    <script type="text/javascript" src="TrymenT-ClocK.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script>
 </head>
 </html>
 ```
@@ -45,8 +45,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrymenT ClocK</title>
-    <link rel="stylesheet" href="TrymenT-ClocK.css">
-    <script type="text/javascript" src="TrymenT-ClocK.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/TrymenT-ClocK/TrymenT-ClocK.min.js"></script>
 </head>
 <body>
     <!-- Here -->
